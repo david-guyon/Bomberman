@@ -1,0 +1,20 @@
+{
+  "name": "Bomberman-server",
+  "author": "David Guyon <david@guyon.me>",
+  "description": "server side of my Bomberman game. See https://github.com/dgetux/Bomberman",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dgetux/Bomberman.git"
+  },
+  "dependencies": {
+    "express": "3.0.6",
+    "jade": "*",
+    "http": "*",
+    "socket.io": "*"
+  }
+}

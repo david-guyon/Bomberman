@@ -1,0 +1,22 @@
+body {
+  padding-top: 50px;
+}
+
+h1, h2 {
+	text-align: center;
+}
+
+p#numberOfPlayers {
+  margin-top: 25px;
+  text-align: center;
+}
+
+form {
+  width: 500px;
+  margin: 25px auto 0 auto;
+}
+
+.input-append {
+  text-align: center;
+}
+

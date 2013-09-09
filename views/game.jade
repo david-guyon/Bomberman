@@ -1,0 +1,22 @@
+!!! 5
+html(lang='en')
+
+  head
+    title= title
+    link(rel="stylesheet", type="text/css", href="/stylesheets/bootstrap.min.css")
+    link(rel="stylesheet", type="text/css", href="/stylesheets/style.css")
+
+  body
+    h1 #{title}
+    h2 using Node.js and Quintus.js
+
+    canvas(width='480', height='480')#bomberman_canvas
+
+    script(type="text/javascript", src='/javascripts/quintus.js')
+    script(type="text/javascript", src="/javascripts/quintus_scenes.js")
+    script(type="text/javascript", src='/javascripts/quintus_sprites.js')
+    script(type="text/javascript", src='/javascripts/quintus_input.js')
+    script(type="text/javascript", src="/javascripts/quintus_2d.js")
+    script(type="text/javascript", src='/javascripts/quintus_touch.js')
+    script(type="text/javascript", src='/javascripts/quintus_ui.js')
+    script(type="text/javascript", src='/javascripts/game.js')

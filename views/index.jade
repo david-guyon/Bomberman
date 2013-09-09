@@ -1,0 +1,21 @@
+!!! 5
+html(lang='en')
+  head
+    title= title
+    link(rel="stylesheet", type="text/css", href="/stylesheets/bootstrap.min.css")
+    link(rel="stylesheet", type="text/css", href="/stylesheets/style.css")
+  body
+    h1 #{title}
+    h2 using Node.js and Quintus.js
+    
+    p#numberOfPlayers.text-info
+
+    form.form-horizontl
+      legend Please, enter your name to join a game
+      div.input-append
+        input#name.span3.input-medium(type='text', name='name', placeholder='Enter your Name')
+        button#joinGame.btn Join the Game
+
+    script(type="text/javascript", src='/javascripts/jquery-1.8.2.js')
+    script(type="text/javascript", src="/socket.io/socket.io.js")
+    script(type="text/javascript", src='/javascripts/main.js')
