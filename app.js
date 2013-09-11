@@ -5,7 +5,6 @@
 var express = require('express')
   , $       = require('jquery')
   , routes  = require('./routes')
-  , user    = require('./routes/user')
   , app     = express()
   , http    = require('http').createServer(app)
   , io      = require('socket.io').listen(http)
@@ -28,7 +27,6 @@ app.configure('development', function(){
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 
 http.listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
