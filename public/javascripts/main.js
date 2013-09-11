@@ -90,7 +90,7 @@ function showPlayersPanel(players) {
     $('#counter').addClass('scaled');
     }, 100);
     if(count == 0) {
-      //window.location = '/game';
+      window.location = '/game';
     }
     count--;
   }, 1000);
