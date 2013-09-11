@@ -3,6 +3,7 @@
  */
 
 var express = require('express')
+  , $       = require('jquery')
   , routes  = require('./routes')
   , user    = require('./routes/user')
   , app     = express()
@@ -34,22 +35,67 @@ http.listen(app.get('port'), function(){
 });
 
 var players = [];
+var maximumNumberOfPlayers = 2;
 
 io.sockets.on('connection', function (socket) {
-  var player = {"name":""};
+  // Check if there is enough place in the current game for a new player
+  if(checkNumberOfPlayers()) {
+    socket.emit('info', {info: 'waiting player'});
 
-  // On connection, emit the current number of player
-  socket.emit('numberOfPlayers', {number: players.length});
+    socket.on('newPlayer', function (data) {
+      if(data.hasOwnProperty("name")) {
+        var player = createNewPlayer(socket, data.name);
+        
+        // Send an ACK to the client
+        socket.emit('confirmPlayer', {name: player.name}); 
 
-  socket.on('newPlayer', function (data) {
-    console.log(data);
-    if(data.hasOwnProperty("name")) {
-      player.name = data.name;
-      players.push(player);
-      // Send a ACK to the client side
-      socket.emit('confirmPlayer', {name: player.name}); 
+        // Check if we're ready to play
+        if(!checkNumberOfPlayers()) {
+          var playersName = [];
+          $.each(players, function(index, value) {
+            playersName.push(value.name);
+          });
+          informPlayers('info', 
+            {'info':   'ready to play',
+             'players': playersName}
+          );
+        }
+        
+        socket.on('disconnect', function () {
+          players = $.grep(players, function(row) {
+            return row != player;
+          });
+          console.log('Player nb: ' + players.length);
+        });
+      }
+    });
 
-      console.log(players);
-    }
-  });
+  } else {
+    socket.emit('info', {info: 'game full'});
+  }
 });
+
+function createNewPlayer(socket, name) {
+  var player = new Object();
+  player.socket = socket;
+  player.name = name;
+  player.emit = function(dataName, data) {
+    player.socket.emit(dataName, data);
+  };
+  players.push(player);
+  return player;
+}
+
+function checkNumberOfPlayers() {
+  if(players.length < maximumNumberOfPlayers) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function informPlayers(dataName, data) {
+  for(var i = 0; i < players.length; i++) {
+    players[i].emit(dataName, data);
+  }
+}

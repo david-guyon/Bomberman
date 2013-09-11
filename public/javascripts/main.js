@@ -1,18 +1,28 @@
+var socket;
+
 $(function() {
 
-  var socket = io.connect();
+  // Hide everything
+  $('form').hide();
+  $('p.text-info').hide();
+  $('#playersPanel').hide();
 
-  // Display number of players
-  socket.on('numberOfPlayers', function(data) {
-    if(data.hasOwnProperty('number')) {
-      if(data.number == 0)
-        $('#numberOfPlayers').text("Nobody is currently playing"); 
-      else if(data.number == 1)
-        $('#numberOfPlayers').text("There is one player currently playing");
-      else
-        $('#numberOfPlayers').text("There are " + data.number + " players currently playing");
+  socket = io.connect();
+
+  socket.on('info', function(data) {
+    if(data.hasOwnProperty('info')) {
+      if(data.info == 'waiting player') {
+        handlePlayerLogin();
+      } else if(data.info == 'game full') {
+        showInfo('Sorry bro, the game is full. Come back later!');
+      }
     }
   });
+
+});
+
+function handlePlayerLogin() {
+  showForm();
 
   // "Join the game" button behaviour
   $('#joinGame').on('click', function() {
@@ -23,7 +33,7 @@ $(function() {
         {name: $('#name').val()}
       );
     } else {
-      console.log('The user name is incorrect');
+      showInfo('Dude, your player name is incorrect!');
     }
     return false;
   });
@@ -31,8 +41,45 @@ $(function() {
   // Response from the Node.js server
   socket.on('confirmPlayer', function(data) {
     if(data.hasOwnProperty('name')) {
-      console.log('Server: welcome ' + data.name);
-      $('form').hide();
+      showInfo('The server says: Hi ' + data.name);
+      hideForm();
+
+      // Wait for the game to be full
+      socket.on('info', function(data) {
+        if(data.hasOwnProperty('info')    &&
+           data.info == 'ready to play'  &&
+           data.hasOwnProperty('players')) {
+           showPlayersPanel(data.players);
+        }
+      });
     }
   });
-});
+}
+
+function showForm() {
+  $('form').show(400);
+}
+
+function hideForm() {
+  $('form').hide(400);
+}
+
+function showInfo(text) {
+  $('p.text-info').text(text);
+  $('p.text-info').show(400);
+}
+
+function hideInfo() {
+  $('p.text-info').hide(400);
+}
+
+function showPlayersPanel(players) {
+  $.each(players, function(index, value) {
+    $('ul').append('<li>' + value + '</li>');
+  });
+  $('#playersPanel').show(400);
+}
+
+function hidePlayersPanel() {
+  $('#playersPanel').hide(400);
+}

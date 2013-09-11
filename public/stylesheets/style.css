@@ -6,12 +6,13 @@ h1, h2 {
 	text-align: center;
 }
 
-p#numberOfPlayers {
+p.text-info {
+  font-size: 16px;
   margin-top: 25px;
   text-align: center;
 }
 
-form {
+form, #playersPanel {
   width: 500px;
   margin: 25px auto 0 auto;
 }

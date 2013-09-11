@@ -8,13 +8,18 @@ html(lang='en')
     h1 #{title}
     h2 using Node.js and Quintus.js
     
-    p#numberOfPlayers.text-info
+    p.text-info
 
     form.form-horizontl
       legend Please, enter your name to join a game
       div.input-append
         input#name.span3.input-medium(type='text', name='name', placeholder='Enter your Name')
         button#joinGame.btn Join the Game
+
+    div#playersPanel
+      h3 Ready to play? 
+      h4 Here's the players list
+      ul
 
     script(type="text/javascript", src='/javascripts/jquery-1.8.2.js')
     script(type="text/javascript", src="/socket.io/socket.io.js")
