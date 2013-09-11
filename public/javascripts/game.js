@@ -2,14 +2,31 @@
 var tileLayer;
 var ghost;
 
-var Q = Quintus()
-	.include("Sprites, Scenes, Input, 2D, UI")
-	.setup(
-		"bomberman_canvas", 
-		{ maximize: false }
-	)
-	.controls();
+/*
+ * Modules to include in Quintus
+ */
+var modules = "Sprites, Scenes, Input, 2D, UI";
 
+/*
+ * View configuration (parameter of Quintus().setup(id, config))
+ */
+var viewConfig = {
+  width:            480,
+  height:           480,
+  upsampleWidth:    420,  // TODO
+  upsampleHeight:   320,  //  Try these properties in different devices
+  downsampleWidth:  1024, //  to validate the impact on the screen
+  downsampleWidth:  768   //  resolution
+};
+
+/*
+ * Initialization of the game (HTML5 canvas) 
+ */
+var Q = Quintus({ development: true }).include(modules).setup("game", viewConfig).controls();
+
+/*
+ * Creation of the Bomberman sprite
+ */
 Q.Sprite.extend("Bomberman", {
 	init: function(p) {
 		this._super(p, {
@@ -38,7 +55,6 @@ Q.Sprite.extend("Bomberman", {
 		// console.log("Ghost-x: " + (ghost.p.x-16)/32);
 		ghost.p.x = this.p.x + this.p.speed;
 		// console.log("Ghost-x: " + (ghost.p.x-16)/32);
-		console.log();
 		if( !tileLayer.collide(ghost) && Q.stage().locate(this.p.x + this.p.speed, this.p.y).p.sheet != "block")
 			this.p.x += this.p.speed;
 		else
@@ -82,10 +98,14 @@ Q.Sprite.extend("Bomberman", {
 	},
 
 	step: function(dt) {
-    	this.stage.collide(this);
-  	}
+   	this.stage.collide(this);
+  }
 });
 
+/*
+ * Creation of the Ghost (of Bomberman) sprite
+ * (the ghost moves before Bomberman moves to check if it's a correct movement)
+ */
 Q.Sprite.extend("Ghost", {
 	init: function(p) {
 		this._super(p, {
@@ -97,6 +117,9 @@ Q.Sprite.extend("Ghost", {
 	}
 });
 
+/*
+ * Creation of the Bomb sprite
+ */
 Q.Sprite.extend("Bomb", {
 	init: function(p) {
 		this._super(p, {
@@ -106,6 +129,9 @@ Q.Sprite.extend("Bomb", {
 	}
 });
 
+/*
+ * Creation of the Block sprite
+ */
 Q.Sprite.extend("Block", {
 	init: function(p) {
 		this._super(p, {
@@ -115,6 +141,9 @@ Q.Sprite.extend("Block", {
 	}
 });
 
+/*
+ * Creation of the Scene: level1
+ */
 Q.scene("level1", function(stage) {
 	// Set the game area (undestroyable blocks)
 	stage.collisionLayer(tileLayer = new Q.TileLayer({ 
@@ -146,10 +175,13 @@ Q.scene("level1", function(stage) {
 	// stage.add("viewport").follow(bomberman);
 });
 
+/*
+ * Files loading and then Scene loading
+ */
 Q.load("bomberman.png, block.png, bomb.png, area.json", function() {
-	Q.sheet("bomb",		 "bomb.png",	  { tilew: 32, tileh: 32 });
-	Q.sheet("block", 	 "block.png", 	  { tilew: 32, tileh: 32 });
-	Q.sheet("bomberman", "bomberman.png", { tilew: 32, tileh: 32 });
+	Q.sheet("bomb",		    "bomb.png",	      { tilew: 32, tileh: 32 });
+	Q.sheet("block", 	    "block.png", 	    { tilew: 32, tileh: 32 });
+	Q.sheet("bomberman",  "bomberman.png",  { tilew: 32, tileh: 32 });
 
 	Q.stageScene("level1");
 });
