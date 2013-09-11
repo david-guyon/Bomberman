@@ -78,6 +78,22 @@ function showPlayersPanel(players) {
     $('ul').append('<li>' + value + '</li>');
   });
   $('#playersPanel').show(400);
+  
+  // Countdown
+  var count = 3;
+  setInterval(function() {
+    $('#counter').removeClass('scaled');
+    $('#counter').addClass('notScaled');
+    setTimeout(function() {
+      $('#counter').removeClass('notScaled');
+      $('#counter').html(count);
+    $('#counter').addClass('scaled');
+    }, 100);
+    if(count == 0) {
+      //window.location = '/game';
+    }
+    count--;
+  }, 1000);
 }
 
 function hidePlayersPanel() {
