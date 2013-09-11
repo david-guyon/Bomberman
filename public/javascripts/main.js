@@ -84,11 +84,13 @@ function showPlayersPanel(players) {
   setInterval(function() {
     $('#counter').removeClass('scaled');
     $('#counter').addClass('notScaled');
+    $('#counter').html(count);
+    
     setTimeout(function() {
       $('#counter').removeClass('notScaled');
-      $('#counter').html(count);
     $('#counter').addClass('scaled');
     }, 100);
+    
     if(count == 0) {
       window.location = '/game';
     }
