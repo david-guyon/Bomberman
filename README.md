@@ -1,4 +1,4 @@
-Based browser Bomberman game
+Browser based Bomberman game
 =================
 
 This project is a browser based version of the old Bomberman game with multiplayer feature. 
@@ -23,6 +23,13 @@ npm install socket.io
 </pre>
 
 Then on the same console, run <code>node app.js</code> (you should be able to run <code>node start</code> but it is apparently not working, I'm on it). Now the server is ready. Launch a browser and go on [localhost:3000](http://localhost:3000). Here's the game! 
+
+###Quintus.js
+
+Quintus is a fabulous HTML5 game engine made in JavaScript. 
+There is no need to install the Quintus library, It's included in /public/javascripts/. This is not the last version. I will update it soon. 
+
+More information about this amazing JS library: [html5quintus.com](http://html5quintus.com/).
 
 _Under this line, things are out of date. I will make important changes soon. Brace yourselves! ;)_
 
