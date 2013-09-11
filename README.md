@@ -4,7 +4,7 @@ Browser based Bomberman game
 This project is a browser based version of the old Bomberman game with multiplayer feature. 
 In this project I use the Quintus JS library for the game engine and the Node.js platform for the server side. 
 
-<img src="https://raw.github.com/dgetux/bomberman-quintus/develop/screenshot/screenshot-1.png" alt="screenshot" />
+<img src="https://raw.github.com/dgetux/Bomberman/master/public/images/screenshot.png" alt="Screenshot of the game area" style="display: block; margin-left: auto; margin-right: auto;"/>
 
 ##Before playing..
 you will need to install few things. 
